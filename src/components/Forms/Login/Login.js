@@ -1,20 +1,48 @@
 import { Form, Button } from 'react-bootstrap'
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Alert from 'react-bootstrap/Alert'
+import api, { endpoints } from '../../../lib/api'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessages, setErrorMessages] = useState([])
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert('submit')
+    const errors = []
+    setErrorMessages(errors)
+    if (!email) {
+      errors.push('Please provide an email!')
+    }
+    if (!password) {
+      errors.push('Please provide an password!')
+    }
+    if (errors.length) {
+      setErrorMessages(errors)
+      return
+    }
 
-    // todo validate fields
-    // submit to backend
+    const response = await api.call(endpoints.login, { email, password })
+    if (!response.confirm) {
+      setErrorMessages([response.results])
+      return
+    }
+
+    navigate('/profile')
   }
 
   return (
     <Form onSubmit={handleSubmit}>
+      {errorMessages.length > 0 &&
+        errorMessages.map((elem, index) => (
+          <Alert key={index} variant="danger">
+            {elem}
+          </Alert>
+        ))}
+
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -42,6 +70,9 @@ const LoginForm = () => {
       <Button variant="primary" type="submit">
         Submit
       </Button>
+      <div>
+        <Link to="/forgot-password">Forgot Password?</Link>
+      </div>
     </Form>
   )
 }
