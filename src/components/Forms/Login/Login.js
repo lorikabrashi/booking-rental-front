@@ -3,12 +3,15 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
 import api, { endpoints } from '../../../lib/api'
-
+import {useDispatch} from 'react-redux'
+import { login } from '../../../lib/store/slices/authSlice'
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessages, setErrorMessages] = useState([])
   const navigate = useNavigate()
+
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -30,7 +33,8 @@ const LoginForm = () => {
       setErrorMessages([response.results])
       return
     }
-
+    dispatch(login(response.results))
+    
     navigate('/profile')
   }
 

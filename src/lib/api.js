@@ -9,6 +9,10 @@ export const endpoints = {
     url: '/auth/register',
     method: 'POST',
   },
+  verifyAccount: {
+    url: '/auth/verify-account',
+    method: 'GET'
+  }
 }
 
 const api = {
@@ -22,7 +26,7 @@ const api = {
       const result = await axiosInstance(config)
       return result.data
     } catch (err) {
-      // console.log(err)
+       console.log(err)
       return err.response.data
     }
   },

@@ -1,31 +1,59 @@
 import { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import api, { endpoints } from '../../../lib/api'
+import { emailRegex, passwordRegex } from '../../../lib/constants'
 
-const RegisterForm = () => {
+const RegisterForm = ({ setRegistered }) => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
+  const [errorMessages, setErrorMessages] = useState([])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-
-    //todo validate
-
-    const response = await api.call(endpoints.register, { email, password, firstName, lastName })
-    if(!response){
-      // validate
+    const errors = []
+    setErrorMessages(errors)
+    if (!emailRegex.test(email)) {
+      errors.push('Please provide a valid email address')
     }
-    // todo navigate to another page
+    if (!passwordRegex.test(password)) {
+      errors.push('Password must be minimum eight characters, at least one letter and one number')
+    }
+    if (!firstName) {
+      errors.push('Please provide a first name')
+    }
+    if (!lastName) {
+      errors.push('Please provide a last name')
+    }
+
+    if (errors.length) {
+      setErrorMessages(errors)
+      return
+    }
+    const response = await api.call(endpoints.register, { email, password, firstName, lastName })
+ 
+    if (!response.confirm) {
+      setErrorMessages([response.results])
+      return
+    }
+    setRegistered(true)
   }
 
   return (
     <Form onSubmit={handleSubmit}>
+      {errorMessages.length > 0 &&
+        errorMessages.map((elem, index) => (
+          <Alert key={index} variant="danger">
+            {elem}
+          </Alert>
+        ))}
+
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
-          type="email"
+          type="text"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
