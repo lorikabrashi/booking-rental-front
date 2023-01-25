@@ -25,4 +25,4 @@ export const authSlice = createSlice({
 })
 
 export const { login, logout } = authSlice.actions
-export default persistReducer(persistConfig, authSlice.reducer) 
+export default persistReducer(persistConfig, authSlice.reducer)

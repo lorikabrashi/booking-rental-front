@@ -4,10 +4,10 @@ import api, { endpoints } from '../../../lib/api'
 import { emailRegex, passwordRegex } from '../../../lib/constants'
 
 const RegisterForm = ({ setRegistered }) => {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [errorMessages, setErrorMessages] = useState([])
 
   const handleSubmit = async (e) => {

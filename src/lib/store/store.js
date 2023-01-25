@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './slices/authSlice'
-
-import { persistStore } from 'reduxjs-toolkit-persist'
-
+import thunk from "redux-thunk";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
   },
+  middleware: [thunk]
 })
 
-export default persistStore(store)
