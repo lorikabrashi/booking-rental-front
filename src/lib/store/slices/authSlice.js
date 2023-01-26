@@ -8,7 +8,7 @@ import { createSlice } from '@reduxjs/toolkit'
 // }
 
 const initialState = {
-  value: localStorage.getItem('auth') ? localStorage.getItem('auth') : {},
+  value: localStorage.getItem('auth') ? localStorage.getItem('auth') : null,
 }
 
 export const authSlice = createSlice({
