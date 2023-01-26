@@ -7,16 +7,16 @@ import App from './App'
 import { store } from './lib/store/store'
 import { Provider } from 'react-redux'
 
-import { persistStore } from 'reduxjs-toolkit-persist'
-import { PersistGate } from 'reduxjs-toolkit-persist/integration/react'
+// import { persistStore } from 'reduxjs-toolkit-persist'
+// import { PersistGate } from 'reduxjs-toolkit-persist/integration/react'
 
-const persistor = persistStore(store)
+// const persistor = persistStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <App />
-    </PersistGate>
+    {/* <PersistGate persistor={persistor}> */}
+    <App />
+    {/* </PersistGate> */}
   </Provider>
 )

@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import storage from 'reduxjs-toolkit-persist/lib/storage'
-import { persistReducer } from 'reduxjs-toolkit-persist'
+// import storage from 'reduxjs-toolkit-persist/lib/storage'
+// import { persistReducer } from 'reduxjs-toolkit-persist'
 
-const persistConfig = {
-  key: 'auth',
-  storage,
-}
+// const persistConfig = {
+//   key: 'auth',
+//   storage,
+// }
 
 const initialState = {
-  value: null,
+  value: localStorage.getItem('auth') ? localStorage.getItem('auth') : null,
 }
 
 export const authSlice = createSlice({
@@ -16,13 +16,17 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      localStorage.setItem('auth', action.payload)
       state.value = action.payload
     },
     logout: (state) => {
+      localStorage.removeItem('auth')
       state.value = null
     },
   },
 })
 
 export const { login, logout } = authSlice.actions
-export default persistReducer(persistConfig, authSlice.reducer)
+export default authSlice.reducer
+
+//export default persistReducer(persistConfig, authSlice.reducer)

@@ -11,14 +11,35 @@ export const endpoints = {
   },
   verifyAccount: {
     url: '/auth/verify-account',
-    method: 'GET'
+    method: 'GET',
+  },
+  me: {
+    url: '/users/me',
+    method: 'GET',
+  },
+  requestPasswordReset: {
+    url: 'auth/request-password-reset',
+    method: 'POST',
+  },
+  resetPassword: {
+    url: 'auth/reset-password',
+    method: 'POST'
   }
 }
 
 const api = {
-  call: async (endpoint, data = {}) => {
+  call: async (endpoint, data = {}, token = null) => {
     try {
-      const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_BASE_URL })
+      const axiosConfig = token
+        ? {
+            baseURL: process.env.REACT_APP_BASE_URL,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        : { baseURL: process.env.REACT_APP_BASE_URL }
+
+      const axiosInstance = axios.create(axiosConfig)
       const config = {
         ...endpoint,
         data: { ...data },
@@ -26,7 +47,7 @@ const api = {
       const result = await axiosInstance(config)
       return result.data
     } catch (err) {
-       console.log(err)
+      console.log(err)
       return err.response.data
     }
   },

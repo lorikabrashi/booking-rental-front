@@ -4,6 +4,7 @@ import Register from '../pages/Register'
 import ForgotPassword from '../pages/ForgotPassword'
 import Profile from '../pages/Profile'
 import VerifyAccount from '../pages/VerifyAccount'
+import ResetPassword from '../pages/ForgotPassword/ResetPassword'
 const routesData = {
   publicRoutes: [
     {
@@ -23,6 +24,10 @@ const routesData = {
       element: <ForgotPassword />,
     },
     {
+      path: '/reset-password',
+      element: <ResetPassword />,
+    },
+    {
       path: '/verify-account',
       element: <VerifyAccount />,
     },
@@ -31,9 +36,8 @@ const routesData = {
     {
       path: '/profile',
       element: <Profile />,
-    }
-  ]
+    },
+  ],
 }
-
 
 export default routesData
