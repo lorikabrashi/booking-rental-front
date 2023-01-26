@@ -19,7 +19,7 @@ export const authSlice = createSlice({
       state.value = action.payload
     },
     logout: (state) => {
-      state = initialState
+      state.value = null
     },
   },
 })

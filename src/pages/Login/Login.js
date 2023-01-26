@@ -3,7 +3,6 @@ import withLayout from '../../hoc/withLayout'
 import LoginForm from '../../components/Forms/Login'
 
 function Login() {
- 
   return (
     <div className="main">
       <h2>Login</h2>

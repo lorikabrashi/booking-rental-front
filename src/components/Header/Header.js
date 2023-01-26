@@ -1,18 +1,13 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import './Header.module.scss'
+import PublicNav from './PublicNav'
+import UserNav from './UserNav'
 
 function Header() {
-  return (
-    <div>
-        <nav>
-          <NavLink to={'/'}>Home</NavLink>
-          <NavLink to={'/login'}>Login</NavLink>
-          <NavLink to={'/register'}>Register</NavLink>
-        </nav>
+  const auth = useSelector((state) => state.auth.value)
 
-    </div>
-  )
+  return <div>{auth ? <UserNav /> : <PublicNav />}</div>
 }
 
 export default Header
